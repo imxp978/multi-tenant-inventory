@@ -1,0 +1,55 @@
+.sidenav-container {
+  height: 100vh;
+}
+
+.sidenav {
+  width: 220px;
+  border-right: 1px solid rgba(0,0,0,0.12);
+}
+
+.sidenav-header {
+  padding: 16px;
+  text-align: center;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+}
+
+.sidenav-header h3 {
+  margin: 0;
+  color: #3f51b5;
+  font-weight: 500;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.app-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.user-name {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.content {
+  padding: 24px;
+}
+
+/* 手機 */
+@media (max-width: 599px) {
+  .content {
+    padding: 12px;
+  }
+}
+
+.active {
+  background: rgba(0,0,0,0.04);
+  color: #3f51b5;
+}
+
+mat-nav-list a {
+  margin-bottom: 4px;
+}

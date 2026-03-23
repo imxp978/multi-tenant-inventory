@@ -1,0 +1,74 @@
+<h2 mat-dialog-title>新增進貨紀錄</h2>
+<form [formGroup]="form">
+  <mat-dialog-content>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>篩選分類</mat-label>
+      <mat-select formControlName="categoryId">
+        <mat-option [value]="null">全部</mat-option>
+        <mat-option *ngFor="let c of categories" [value]="c.id">{{
+          c.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>品項</mat-label>
+      <mat-select formControlName="productId">
+        <mat-option *ngFor="let p of products" [value]="p.id">
+          {{ p.name }} ({{ p.sku }})
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width"
+      *ngIf="selectedProduct"
+    >
+      <mat-label>顏色</mat-label>
+      <mat-select formControlName="variantId">
+        <mat-option *ngFor="let v of selectedProduct.variants" [value]="v.id">
+          {{ v.color }} (目前庫存: {{ v.stock }})
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width"
+      *ngIf="selectedVariant"
+    >
+      <mat-label>數量</mat-label>
+      <input matInput type="number" formControlName="quantity" min="1" />
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width"
+      *ngIf="selectedVariant"
+    >
+      <mat-label>進貨單價</mat-label>
+      <input matInput type="number" formControlName="unitCost" />
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width"
+      *ngIf="selectedVariant"
+    >
+      <mat-label>備註</mat-label>
+      <input matInput formControlName="note" />
+    </mat-form-field>
+  </mat-dialog-content>
+</form>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>取消</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="save()"
+    [disabled]="form.invalid"
+  >
+    確認
+  </button>
+</mat-dialog-actions>

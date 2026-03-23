@@ -1,0 +1,109 @@
+<div class="container">
+  <h2 class="page-title">月結報表</h2>
+
+  <div class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>年份</mat-label>
+      <mat-select [formControl]="yearControl">
+        <mat-option *ngFor="let y of years" [value]="y">{{ y }}年</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>月份</mat-label>
+      <mat-select [formControl]="monthControl">
+        <mat-option *ngFor="let m of months" [value]="m">{{ m }}月</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="summary-cards" *ngIf="data">
+    <mat-card class="summary-card revenue">
+      <mat-card-subtitle>總營收</mat-card-subtitle>
+      <mat-card-title>{{
+        data.summary.totalRevenue | currency: "TWD" : "symbol" : "1.0-0"
+      }}</mat-card-title>
+    </mat-card>
+    <mat-card class="summary-card cost">
+      <mat-card-subtitle>總成本</mat-card-subtitle>
+      <mat-card-title>{{
+        data.summary.totalCost | currency: "TWD" : "symbol" : "1.0-0"
+      }}</mat-card-title>
+    </mat-card>
+    <mat-card class="summary-card profit">
+      <mat-card-subtitle>毛利</mat-card-subtitle>
+      <mat-card-title
+        [class.positive]="data.summary.grossProfit > 0"
+        [class.negative]="data.summary.grossProfit < 0"
+      >
+        {{ data.summary.grossProfit | currency: "TWD" : "symbol" : "1.0-0" }}
+      </mat-card-title>
+    </mat-card>
+    <mat-card class="summary-card orders">
+      <mat-card-subtitle>訂單數</mat-card-subtitle>
+      <mat-card-title>{{ data.summary.totalOrders }}</mat-card-title>
+    </mat-card>
+    <mat-card class="summary-card items">
+      <mat-card-subtitle>售出件數</mat-card-subtitle>
+      <mat-card-title>{{ data.summary.totalItemsSold }}</mat-card-title>
+    </mat-card>
+  </div>
+
+  <div class="table-container mat-elevation-z2" *ngIf="data">
+    <table mat-table [dataSource]="data.byProduct">
+      <ng-container matColumnDef="productName">
+        <th mat-header-cell *matHeaderCellDef>品名</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="product-info">
+            <span class="name">{{ element.productName }}</span>
+            <span class="sku text-muted">{{ element.sku }}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef>分類</th>
+        <td mat-cell *matCellDef="let element">{{ element.category }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalQuantity">
+        <th mat-header-cell *matHeaderCellDef>銷量</th>
+        <td mat-cell *matCellDef="let element">{{ element.totalQuantity }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalRevenue">
+        <th mat-header-cell *matHeaderCellDef>營收</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.totalRevenue | currency: "TWD" : "symbol" : "1.0-0" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalCost">
+        <th mat-header-cell *matHeaderCellDef>成本</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.totalCost | currency: "TWD" : "symbol" : "1.0-0" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalProfit">
+        <th mat-header-cell *matHeaderCellDef>毛利</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [class.positive]="element.totalProfit > 0"
+          [class.negative]="element.totalProfit < 0"
+        >
+          {{ element.totalProfit | currency: "TWD" : "symbol" : "1.0-0" }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+  <div class="empty-state" *ngIf="!data || !data.byProduct.length">
+    <mat-icon>leaderboard</mat-icon>
+    <p>該月份尚無銷售資料</p>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>{{ isEdit ? "編輯規格" : "新增規格" }}</h2>
+<form [formGroup]="form">
+  <mat-dialog-content>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>規格（顏色/尺寸）</mat-label>
+      <input matInput formControlName="color" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>成本</mat-label>
+      <input matInput type="number" formControlName="costPrice" min="0" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>庫存</mat-label>
+      <input matInput type="number" formControlName="stock" min="0" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>警示庫存</mat-label>
+      <input matInput type="number" formControlName="minStock" min="0" />
+    </mat-form-field>
+  </mat-dialog-content>
+</form>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>取消</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="save()"
+    [disabled]="form.invalid"
+  >
+    儲存
+  </button>
+</mat-dialog-actions>

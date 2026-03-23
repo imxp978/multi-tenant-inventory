@@ -1,0 +1,20 @@
+# 依賴套件 (絕對不能進 Git)
+/node_modules/
+
+/dist/
+/.angular/
+/tmp/
+/out-tsc/
+/bazel-out/
+
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.placeholder
+
+.DS_Store
+Thumbs.db
+
+.env
+.env.*
